@@ -140,6 +140,7 @@ ON UBUNTU machine: Launch an EC2
 -----------------
 > update package index
 sudo apt update -y
+sudo apt upgrade -y
 
 > install pre-requisite packages
 sudo apt install -y ca-certificates curl gnupg lsb-release
@@ -201,7 +202,7 @@ docker run hello-world
 			
 			docker run centos						# pull and run the container the latest version 
 			docker run centos:centos8				# pull the centos version8 using tag.
-
+			docker container run -d -p 80:80 nginx  #port mapping
 
 			docker run ==> It is used to run the container ::::
 			
