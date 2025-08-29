@@ -136,15 +136,60 @@ Hardware
 							
 							
 			Installation of Docker Container Engine ::::
-			
-				sudo apt install docker.io -y
-				systemctl status docker
+ON UBUNTU machine: Launch an EC2
+-----------------
+> update package index
+sudo apt update -y
+
+> install pre-requisite packages
+sudo apt install -y ca-certificates curl gnupg lsb-release
+
+> Add docker's official GPG key 
+- GPG, or GNU Privacy Guard, is a public key cryptography implementation. 
+- used to sign Docker packages and repositories, ensuring the integrity and authenticity of Docker images and packages
+
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+> Set up docker repository
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+> Again update package
+sudo apt update
+
+>Install docker
+sudo apt install docker.io -y
+OR
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+systemctl status docker
+systemctl start docker
+systemctl enable --now docker
+
+> Verify 
+docker --version
+
+> Run docker using user (not root)
+sudo usermod -aG docker $USER
+
+-- restart ec2 
+
+> Test
+docker run hello-world
+
+
+
 				
 				
 			Docker Commands :::::
 			
 			docker version 
 			docker images 
+            docker container ls
+            docker container ls -a
 			docker ps 
 			docker ps -a 
 			docker pull <image_name>
